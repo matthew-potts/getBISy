@@ -75,4 +75,4 @@ jobs:
     - name: Publish getBISy distribution 📦 to TestPyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        repository-url: https://github.com/matthew-potts/getBISy
+        repository-url: https://test.pypi.org/project/getBISy/
