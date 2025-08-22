@@ -40,7 +40,8 @@ jobs:
       name: pypi
       url: https://pypi.org/p/getBISy  # Replace <package-name> with your PyPI project name
     permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
+      id-token: write
+      contents: read
 
     steps:
     - name: Download all the dists
@@ -62,7 +63,8 @@ jobs:
       url: https://test.pypi.org/project/getBISy/
 
     permissions:
-      id-token: write 
+      id-token: write
+      contents: read
 
     steps:
     - name: Download all the dists
