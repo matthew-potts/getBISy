@@ -15,6 +15,3 @@ dynamic = ["dependencies"]
 [tools.setuptools.dynamic]
 dependencies = {file = "requirements.txt"}
 
-[tool.setuptools_scm]
-version_scheme = "post-release"
-local_scheme = "no-local-version"

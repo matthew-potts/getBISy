@@ -21,14 +21,14 @@ jobs:
         pip install
         build
         --user  
-    - name: Bump version (patch)
+    - name: Bump patch version in pyproject.toml
       run: |
         CURRENT_VERSION=$(grep -Po '(?<=version = ")[^"]*' pyproject.toml)
         IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
         NEW_VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
         sed -i "s/version = \"$CURRENT_VERSION\"/version = \"$NEW_VERSION\"/" pyproject.toml
         echo "Version bumped to $NEW_VERSION"
-
+        
     - name: Clean previous builds
       run: rm -rf dist/ build/ *.egg-info
 
