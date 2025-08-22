@@ -8,10 +8,13 @@ authors = [
     {name = "Matthew Potts", email = "matthew-potts@live.com"}
 ]
 description = "package description"
-version = "0.0.1"
 readme = "README.md"
 requires-python = ">=3.7"
 dynamic = ["dependencies"]
 
 [tools.setuptools.dynamic]
 dependencies = {file = "requirements.txt"}
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "no-local-version"
