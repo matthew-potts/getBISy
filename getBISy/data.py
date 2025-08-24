@@ -1,5 +1,5 @@
-from src.enums import LbsMeasure, Position, Instrument, CurrencyType, Institution, Sector, Region, PositionType, CurrencyGroup, Maturity, RateType, IdsMeasure, UnitOfMeasure
-from src.fetcher import GenericFetcher, TitleFetcher
+from getBISy.enums import LbsMeasure, Position, Instrument, CurrencyType, Institution, Sector, Region, PositionType, CurrencyGroup, Maturity, RateType, IdsMeasure, UnitOfMeasure
+from getBISy.fetcher import GenericFetcher, TitleFetcher
 
 def get_policy_rate_data(country: str, freq: str) -> str:
     """
