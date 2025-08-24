@@ -63,7 +63,7 @@ jobs:
     - name: Publish getBISy distribution to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        repository-url: https://pypi.org/legacy/
+        repository-url: https://upload.pypi.org/legacy/
 
   publish-to-testpypi:
     name: Publish new getBISy package to TestPyPI
