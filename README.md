@@ -1,14 +1,18 @@
 # getBISy
 
-A Python package for programmatically fetching and working with Bank for International Settlements (BIS) datasets, including policy rates, exchange rates, locational banking statistics, international debt securities, and global liquidity data.
+![Cross-border credit trends](plots/LBS.png)
 
-## Features
-- Fetch policy rate data for any country and frequency
-- Retrieve exchange rate data for any currency
-- Access locational banking statistics with flexible filters
-- Download international debt securities data
-- Obtain global liquidity data
-- Enum-based API for robust, error-resistant parameterization
+A Python package for programmatically fetching and working with Bank for International Settlements (BIS) datasets.
+
+The package currently allows access to the following sets of international financial statistics via the BIS data portal.
+
+- Central Bank policy rates
+- Bilateral exchange rates
+- Locational banking statistics
+- International debt securities 
+- Global liquidity data
+
+All major parameters are declared in custom enums to ensure error-resistant paramaterisation.
 
 ## Installation
 
@@ -36,10 +40,6 @@ fx = get_exchange_rate_data('USD')
 lbs = get_locational_banking_data(measure=LbsMeasure.Stocks, position=Position.Claims)
 ```
 
-## Enum Reference
-All major parameters are type-safe enums, defined in `src/enums.py`. Example enums include:
-- `LbsMeasure`, `Position`, `Instrument`, `CurrencyType`, `Institution`, `Sector`, `Region`, `PositionType`, `CurrencyGroup`, `Maturity`, `RateType`, `IdsMeasure`, `UnitOfMeasure`
-
 ## Project Structure
 ```
 getBISy/
@@ -47,7 +47,6 @@ getBISy/
 │   ├── __init__.py
 │   ├── data.py         # Main data-fetching functions
 │   ├── enums.py        # Enum definitions for all API parameters
-│   ├── fetcher.py      # Fetcher classes for making API requests
-│   └── ...
+│   └── fetcher.py      # Fetcher classes for making API requests
 ├── requirements.txt
 ```

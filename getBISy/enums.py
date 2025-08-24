@@ -7,6 +7,7 @@ class Region(Enum):
     AllCountries = '3P'
     DevelopingAsiaAndPacific = '4Y'
     EmergingAndDevelopingEconomies = '4T'
+    EuropeanDevelopedCountries = '5K'
     DevelopedCountries = '5R'
     DevelopingAfricaAndMiddleEast = '4R'
     DevelopingLatinAmericaAndCaribbean = '4U'
