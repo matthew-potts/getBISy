@@ -115,7 +115,7 @@ fig.update_layout(
     )
 )
 ```
-![LBS Example](plots/lbs.png)
+![LBS Example](plots/LBS.png)
 
 
 ### Global Liquidity Indicators
@@ -196,7 +196,7 @@ fig.update_layout(
     )
 )
 ```
-![GLI Example](plots/gli.png)
+![GLI Example](plots/GLI.png)
 
 ## Project Structure
 ```
