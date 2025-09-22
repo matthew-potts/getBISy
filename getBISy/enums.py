@@ -15,9 +15,12 @@ class Region(Enum):
     EuroArea = '5C'
     LiquidityAllCountries = '5J'
     LiquidityDevelopingEurope = '2A'
+    US = 'US'
+    Local = '1E'
+    CrossBorder = '5Z'
 
 class Maturity(Enum):
-    Total = 'A'
+    Total = 'T'
     LongTerm = 'K'
     ShortTerm = 'C'
 
@@ -70,12 +73,13 @@ class Sector(Enum):
     NonFinancialPrivateSector = 'S'
     NonFinancialSector = 'P'
     NonBankFinancialInstitution = 'F'
+    LiquidityAllSectors = 'A'
+    TotalEconomy = 'S1'
 
 class CurrencyType(Enum):
     All = 'A'
     Domestic = 'D'
     Foreign = 'F'
-
 
 class UnitOfMeasure(Enum):
     EUR = 'EUR'
@@ -83,3 +87,30 @@ class UnitOfMeasure(Enum):
     USD = 'USD'
     PercentageOfGDPYoY = '771'
     JPY = 'JPY'
+
+class AccountingEntry(Enum):
+    Assets = 'A'
+    Liabilities = 'L'
+
+class TransactionType(Enum):
+    Stocks = 'LE'
+    Flows = 'F'
+
+class DebtInstrumentType(Enum):
+    All = 'F3'
+    FixedRate = 'F3FR'
+    FloatingRate = 'F3B'
+    VariableRate = 'F3VR'
+    InflationLinkedVariableRate = 'F3VRA'
+    InterestRateLinkedVariableRate = 'F3VRB'
+
+class CurrencyDenomination(Enum):
+    All = '_T'
+    AllExceptDomestic = 'X1'
+    Domestic = 'XDC'
+
+class ValuationMethod(Enum):
+    FaceValue = 'F'
+    MarketValue = 'M'
+    NominalValue = 'N'
+

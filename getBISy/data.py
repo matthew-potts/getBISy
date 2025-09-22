@@ -1,4 +1,4 @@
-from getBISy.enums import LbsMeasure, Position, Instrument, CurrencyType, Institution, Sector, Region, PositionType, CurrencyGroup, Maturity, RateType, IdsMeasure, UnitOfMeasure
+from getBISy.enums import LbsMeasure, Position, Instrument, CurrencyType, Institution, Sector, Region, PositionType, CurrencyGroup, Maturity, RateType, IdsMeasure, UnitOfMeasure, AccountingEntry, TransactionType, DebtInstrumentType, CurrencyDenomination, ValuationMethod
 from getBISy.fetcher import GenericFetcher, TitleFetcher
 
 def get_policy_rate_data(country: str, freq: str) -> str:
@@ -150,4 +150,43 @@ def get_global_liquidity_data(
     """
     url = f'WS_GLI/~/{freq}.{currency}.{borrowing_country.value}.{borrowing_sector.value}.{lending_sector.value}.{position_type.value}.{instrument_type.value}.{unit_of_measure.value}'
     fetcher = TitleFetcher()
+    return fetcher.fetch(url)
+
+
+def get_debt_securities_data(
+        freq: str = 'Q',
+        reference_area: Region = Region.AllCountries,
+        counterparty_area: Region = Region.AllCountries,
+        reporting_sector: Sector = Sector.All,
+        counterparty_sector: Sector = Sector.All,
+        accounting_entry: AccountingEntry = AccountingEntry.Assets,
+        transaction_type: TransactionType = TransactionType.Stocks,
+        instrument: DebtInstrumentType = DebtInstrumentType.All,
+        maturity: Maturity = Maturity.Total,
+        unit_of_measure: UnitOfMeasure = UnitOfMeasure.USD,
+        currency_denomination: CurrencyDenomination = CurrencyDenomination.All,
+        valuation_method: ValuationMethod = ValuationMethod.MarketValue
+) -> str:
+    """
+    Fetches Debt Securities data with various filtering options.
+    
+    Args:
+        freq (str, optional): Data frequency ('Q' for quarterly, etc.). Defaults to 'Q'.
+        reference_area (enums.Region, optional): Reference area/region. Defaults to AllCountries.
+        counterparty_area (enums.Region, optional): Counterparty area/region. Defaults to AllCountries.
+        reporting_sector (enums.Sector, optional): Reporting sector. Defaults to All.
+        counterparty_sector (enums.Sector, optional): Counterparty sector. Defaults to All.
+        accounting_entry (enums.AccountingEntry, optional): Accounting entry type. Defaults to Assets.
+        transaction_type (enums.TransactionType, optional): Transaction type. Defaults to Stocks.
+        instrument (enums.DebtInstrumentType, optional): Debt instrument type. Defaults to All.
+        maturity (enums.Maturity, optional): Maturity type. Defaults to Total.
+        unit_of_measure (enums.UnitOfMeasure, optional): Unit of measure. Defaults to USD.
+        currency_denomination (enums.CurrencyDenomination, optional): Currency denomination. Defaults to All.
+        valuation_method (enums.ValuationMethod, optional): Valuation method. Defaults to MarketValue.
+    
+    Returns:
+        str: The fetched debt securities data as a string.
+    """
+    url = f'WS_NA_SEC_DSS/~/{freq}.N.{reference_area.value}.{counterparty_area.value}.{reporting_sector.value}.{counterparty_sector.value}.N.{accounting_entry.value}.{transaction_type.value}.{instrument.value}.{maturity.value}._Z.{unit_of_measure.value}.{currency_denomination.value}.{valuation_method.value}.V.N._T'
+    fetcher = GenericFetcher()
     return fetcher.fetch(url)
