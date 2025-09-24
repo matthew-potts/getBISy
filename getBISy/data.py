@@ -188,5 +188,5 @@ def get_debt_securities_data(
         str: The fetched debt securities data as a string.
     """
     url = f'WS_NA_SEC_DSS/~/{freq}.N.{reference_area.value}.{counterparty_area.value}.{reporting_sector.value}.{counterparty_sector.value}.N.{accounting_entry.value}.{transaction_type.value}.{instrument.value}.{maturity.value}._Z.{unit_of_measure.value}.{currency_denomination.value}.{valuation_method.value}.V.N._T'
-    fetcher = GenericFetcher()
+    fetcher = TitleFetcher()
     return fetcher.fetch(url)
