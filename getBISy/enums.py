@@ -71,6 +71,8 @@ class Sector(Enum):
     All = '1'
     Banks = 'B'
     Government = 'G'
+    FinancialSector = 'S12'
+    GeneralGovernment = 'S13'
     NonBanks = 'N'
     NonFinancialPrivateSector = 'S'
     NonFinancialSector = 'P'
