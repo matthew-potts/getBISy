@@ -23,6 +23,8 @@ class Maturity(Enum):
     Total = 'T'
     LongTerm = 'K'
     ShortTerm = 'C'
+    LongTermOriginal = 'L'
+    ShortTermOriginal = 'S'
 
 class RateType(Enum):
     All = 'A'
