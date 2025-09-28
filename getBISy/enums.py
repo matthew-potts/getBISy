@@ -18,6 +18,7 @@ class Region(Enum):
     US = 'US'
     Local = '1E'
     CrossBorder = '5Z'
+    World = 'XW'
 
 class Maturity(Enum):
     Total = 'T'

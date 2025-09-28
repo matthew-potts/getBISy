@@ -187,6 +187,9 @@ def get_debt_securities_data(
     Returns:
         str: The fetched debt securities data as a string.
     """
-    url = f'WS_NA_SEC_DSS/~/{freq}.N.{reference_area.value}.{counterparty_area.value}.{reporting_sector.value}.{counterparty_sector.value}.N.{accounting_entry.value}.{transaction_type.value}.{instrument.value}.{maturity.value}._Z.{unit_of_measure.value}.{currency_denomination.value}.{valuation_method.value}.V.N._T'
+    def _get_value(val):
+        return val.value if hasattr(val, "value") else val
+
+    url = f'WS_NA_SEC_DSS/~/{freq}.N.{_get_value(reference_area)}.{_get_value(counterparty_area)}.{_get_value(reporting_sector)}.{_get_value(counterparty_sector)}.N.{_get_value(accounting_entry)}.{_get_value(transaction_type)}.{_get_value(instrument)}.{_get_value(maturity)}._Z.{_get_value(unit_of_measure)}.{_get_value(currency_denomination)}.{_get_value(valuation_method)}.V.N._T'
     fetcher = TitleFetcher()
     return fetcher.fetch(url)

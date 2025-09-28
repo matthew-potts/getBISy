@@ -7,8 +7,9 @@ The package currently allows access to the following sets of international finan
 - Central Bank policy rates
 - Bilateral exchange rates
 - Locational banking statistics
-- International debt securities 
+- International debt securities data
 - Global liquidity data
+- Debt securities data
 
 All major parameters are declared in custom enums to ensure error-resistant paramaterisation.
 
