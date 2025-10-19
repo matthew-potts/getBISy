@@ -41,6 +41,28 @@ def get_exchange_rate_data(
     fetcher = GenericFetcher()
     return fetcher.fetch(url)
 
+def get_effective_exchange_rate_data(
+    currency: str,
+    type: str = 'R',
+    freq: str = 'M',
+    basket: str = 'B'
+) -> str:
+    """
+    Fetches effective exchange rate data for a given currency, frequency, and collection indicator.
+    
+    Args:
+        currency (str): The currency code (e.g., 'USD', 'EUR').
+        type (str, optional): Type of effective exchange rate ('R' for real, 'N' for nominal). Defaults to 'R'.
+        freq (str, optional): Data frequency ('D' for daily, 'M' for monthly, etc.). Defaults to 'M'.
+        basket (str, optional): Basket identifier, either broad ('B') or narrow ('N'). Defaults to 'B'.
+
+    Returns:
+        str: The fetched effective exchange rate data as a string.
+    """
+    url = f'WS_EER/~/{freq}.{type}.{basket}.{currency}.'
+    fetcher = GenericFetcher()
+    return fetcher.fetch(url)
+
 
 def get_locational_banking_data(
     freq: str = 'Q',
