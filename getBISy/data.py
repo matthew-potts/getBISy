@@ -19,6 +19,7 @@ def get_policy_rate_data(country: str, freq: str) -> str:
 
 def get_exchange_rate_data(
     currency: str,
+    reference_area: str = None,
     freq: str = 'D',
     collection_indicator: str = 'A'
 ) -> str:
@@ -33,7 +34,10 @@ def get_exchange_rate_data(
     Returns:
         str: The fetched exchange rate data as a string.
     """
-    url = f'WS_XRU/~/{freq}.{currency[:2]}.{currency}.{collection_indicator}'
+
+    if reference_area is None:
+        reference_area = currency[:2]
+    url = f'WS_XRU/~/{freq}.{reference_area}.{currency}.{collection_indicator}'
     fetcher = GenericFetcher()
     return fetcher.fetch(url)
 
