@@ -1,4 +1,6 @@
 from enum import Enum
+
+
 class CurrencyGroup(Enum):
     Foreign = 'F'
     All = 'A'

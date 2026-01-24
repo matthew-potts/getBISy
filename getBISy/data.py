@@ -1,5 +1,61 @@
+from enum import Enum
+from functools import wraps
+from typing import Callable, get_type_hints
+import inspect
+
 from getBISy.enums import LbsMeasure, Position, Instrument, CurrencyType, Institution, Sector, Region, PositionType, CurrencyGroup, Maturity, RateType, IdsMeasure, UnitOfMeasure, AccountingEntry, TransactionType, DebtInstrumentType, CurrencyDenomination, ValuationMethod
 from getBISy.fetcher import GenericFetcher, TitleFetcher
+
+
+def _format_enum_values(enum_class: type) -> str:
+    """Format enum values for display in error messages."""
+    return ", ".join(f"{member.name}={member.value!r}" for member in enum_class)
+
+
+def validate_enums(func: Callable) -> Callable:
+    """
+    Decorator that validates enum parameters at runtime.
+
+    Checks that each argument corresponding to a parameter with an enum type hint
+    is a valid member of that enum. Provides helpful error messages showing all
+    valid enum values.
+    """
+    hints = get_type_hints(func)
+
+    # Identify which parameters expect enum types
+    enum_params = {
+        name: hint for name, hint in hints.items()
+        if isinstance(hint, type) and issubclass(hint, Enum)
+    }
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        # Get parameter names from function signature
+        sig = inspect.signature(func)
+        param_names = list(sig.parameters.keys())
+
+        # Build a dict of all provided arguments
+        bound_args = {}
+        for i, arg in enumerate(args):
+            if i < len(param_names):
+                bound_args[param_names[i]] = arg
+        bound_args.update(kwargs)
+
+        # Validate enum parameters
+        for param_name, enum_class in enum_params.items():
+            if param_name in bound_args:
+                value = bound_args[param_name]
+                if not isinstance(value, enum_class):
+                    valid_values = _format_enum_values(enum_class)
+                    raise TypeError(
+                        f"Parameter '{param_name}' must be a member of {enum_class.__name__}. "
+                        f"Got {type(value).__name__}: {value!r}. "
+                        f"Valid values are: {valid_values}"
+                    )
+
+        return func(*args, **kwargs)
+
+    return wrapper
 
 def get_policy_rate_data(country: str, freq: str) -> str:
     """
@@ -64,6 +120,7 @@ def get_effective_exchange_rate_data(
     return fetcher.fetch(url)
 
 
+@validate_enums
 def get_locational_banking_data(
     freq: str = 'Q',
     measure: LbsMeasure = LbsMeasure.Stocks,
@@ -75,7 +132,7 @@ def get_locational_banking_data(
     reporting_institution: Institution = Institution.All,
     reporting_country: str = '5A',
     counterparty_sector: Sector = Sector.All,
-    counterparty_country: Region = '5J',
+    counterparty_country: Region = Region.LiquidityAllCountries,
     position_type: PositionType = PositionType.All
 ) -> str:
     """
@@ -103,6 +160,7 @@ def get_locational_banking_data(
     return fetcher.fetch(url)
 
 
+@validate_enums
 def get_international_debt_data(
     freq: str = 'Q',
     issuer_res: Region = Region.AllCountries, 
@@ -111,7 +169,7 @@ def get_international_debt_data(
     issuer_sector_ult: Sector = Sector.All,
     market: str = 'C',
     issue_type: str = 'A',
-    issue_curr_group: CurrencyGroup = 'A',
+    issue_curr_group: CurrencyGroup = CurrencyGroup.All,
     issue_curr: str = 'A',
     issue_orig_mat: Maturity = Maturity.Total,
     issue_re_mat: Maturity = Maturity.Total,
@@ -148,15 +206,16 @@ def get_international_debt_data(
     return fetcher.fetch(url)
 
 
+@validate_enums
 def get_global_liquidity_data(
     freq: str = 'Q',
     currency: str = 'USD',
-    borrowing_country: Region = '5J',
-    borrowing_sector: Sector = 'A',
-    lending_sector: Sector = 'A',
-    position_type: PositionType = 'A',
-    instrument_type: Instrument = 'A',
-    unit_of_measure: UnitOfMeasure = 'USD'
+    borrowing_country: Region = Region.LiquidityAllCountries,
+    borrowing_sector: Sector = Sector.LiquidityAllSectors,
+    lending_sector: Sector = Sector.LiquidityAllSectors,
+    position_type: PositionType = PositionType.All,
+    instrument_type: Instrument = Instrument.All,
+    unit_of_measure: UnitOfMeasure = UnitOfMeasure.USD
 ) -> str:
     """
     Fetches Global Liquidity data with various filtering options.
@@ -179,6 +238,7 @@ def get_global_liquidity_data(
     return fetcher.fetch(url)
 
 
+@validate_enums
 def get_debt_securities_data(
         freq: str = 'Q',
         reference_area: Region = Region.AllCountries,
