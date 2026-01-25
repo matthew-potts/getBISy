@@ -3,7 +3,13 @@ from functools import wraps
 from typing import Callable, get_type_hints
 import inspect
 
-from getBISy.enums import LbsMeasure, Position, Instrument, CurrencyType, Institution, Sector, Region, PositionType, CurrencyGroup, Maturity, RateType, IdsMeasure, UnitOfMeasure, AccountingEntry, TransactionType, DebtInstrumentType, CurrencyDenomination, ValuationMethod
+from getBISy.enums import (
+    LbsMeasure, Position, Instrument, CurrencyType, Institution, Sector, Region,
+    PositionType, CurrencyGroup, Maturity, RateType, IdsMeasure, UnitOfMeasure,
+    AccountingEntry, TransactionType, DebtInstrumentType, CurrencyDenomination,
+    ValuationMethod, OtcDerivativeType, OtcDerivativeInstrument, OtcDerivativeRisk,
+    OtcCounterpartySector, OtcUnderlyingSector, OtcMaturity, OtcRating, OtcBasis
+)
 from getBISy.fetcher import GenericFetcher, TitleFetcher
 
 
@@ -278,4 +284,62 @@ def get_debt_securities_data(
 
     url = f'WS_NA_SEC_DSS/~/{freq}.N.{_get_value(reference_area)}.{_get_value(counterparty_area)}.{_get_value(reporting_sector)}.{_get_value(counterparty_sector)}.N.{_get_value(accounting_entry)}.{_get_value(transaction_type)}.{_get_value(instrument)}.{_get_value(maturity)}._Z.{_get_value(unit_of_measure)}.{_get_value(currency_denomination)}.{_get_value(valuation_method)}.V.N._T'
     fetcher = TitleFetcher()
+    return fetcher.fetch(url)
+
+
+@validate_enums
+def get_otc_derivatives_data(
+    freq: str = 'H',
+    derivative_type: OtcDerivativeType = OtcDerivativeType.NotionalAmounts,
+    instrument: OtcDerivativeInstrument = OtcDerivativeInstrument.All,
+    risk_category: OtcDerivativeRisk = OtcDerivativeRisk.All,
+    reporting_country: str = '5J',
+    counterparty_sector: OtcCounterpartySector = OtcCounterpartySector.All,
+    counterparty_country: str = '5J',
+    underlying_sector: OtcUnderlyingSector = OtcUnderlyingSector.All,
+    currency_leg1: str = 'TO1',
+    currency_leg2: str = 'TO1',
+    maturity: OtcMaturity = OtcMaturity.All,
+    rating: OtcRating = OtcRating.All,
+    basis: OtcBasis = OtcBasis.NetNet
+) -> str:
+    """
+    Fetches OTC Derivatives statistics data with various filtering options.
+
+    Args:
+        freq (str, optional): Data frequency ('H' for half-yearly). Defaults to 'H'.
+        derivative_type (OtcDerivativeType, optional): Type of measure (notional amounts,
+            market values, credit exposure, etc.). Defaults to NotionalAmounts.
+        instrument (OtcDerivativeInstrument, optional): Derivative instrument type
+            (forwards, swaps, options, CDS, etc.). Defaults to All.
+        risk_category (OtcDerivativeRisk, optional): Market risk category
+            (FX, interest rate, equity, commodities, credit). Defaults to All.
+        reporting_country (str, optional): Reporting country code. Defaults to '5J' (all).
+        counterparty_sector (OtcCounterpartySector, optional): Counterparty sector
+            (dealers, financial institutions, non-financial, CCPs). Defaults to All.
+        counterparty_country (str, optional): Counterparty country code. Defaults to '5J' (all).
+        underlying_sector (OtcUnderlyingSector, optional): Sector of underlying asset
+            (mainly for CDS - sovereigns, financials, etc.). Defaults to All.
+        currency_leg1 (str, optional): Currency of first leg. Defaults to 'TO1' (all).
+        currency_leg2 (str, optional): Currency of second leg. Defaults to 'TO1' (all).
+        maturity (OtcMaturity, optional): Maturity breakdown. Defaults to All.
+        rating (OtcRating, optional): Rating classification. Defaults to All.
+        basis (OtcBasis, optional): Adjustment for double-counting
+            (gross-gross, net-gross, net-net). Defaults to NetNet.
+
+    Returns:
+        str: The fetched OTC derivatives data as a string.
+
+    Note:
+        Data is released semi-annually (May and November). The statistics cover
+        notional amounts, market values, and credit exposure for FX, interest rate,
+        equity, commodity, and credit derivatives.
+    """
+    url = (
+        f'WS_OTC_DERIV2/~/{freq}.{derivative_type.value}.{instrument.value}.'
+        f'{risk_category.value}.{reporting_country}.{counterparty_sector.value}.'
+        f'{counterparty_country}.{underlying_sector.value}.{currency_leg1}.'
+        f'{currency_leg2}.{maturity.value}.{rating.value}.{basis.value}'
+    )
+    fetcher = GenericFetcher()
     return fetcher.fetch(url)

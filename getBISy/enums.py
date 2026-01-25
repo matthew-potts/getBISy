@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class CurrencyGroup(Enum):
     Foreign = 'F'
     All = 'A'
@@ -120,4 +119,139 @@ class ValuationMethod(Enum):
     FaceValue = 'F'
     MarketValue = 'M'
     NominalValue = 'N'
+
+class OtcDerivativeType(Enum):
+    """Type of derivative measure/statistic."""
+    NotionalAmounts = 'A'
+    GrossPositiveMarketValue = 'B'
+    GrossNegativeMarketValue = 'C'
+    GrossMarketValue = 'D'
+    GrossPositiveCreditExposure = 'E'
+    GrossNegativeCreditExposure = 'F'
+    GrossCreditExposure = 'H'
+    TurnoverNotional = 'K'
+    NumberOfContracts = 'L'
+    TurnoverContracts = 'M'
+    HerfindahlIndex = 'Q'
+    NumberOfDealers = 'R'
+    NotionalBought = 'S'
+    NotionalSold = 'T'
+
+
+class OtcDerivativeInstrument(Enum):
+    """Type of derivative instrument."""
+    All = 'A'
+    Spot = 'B'
+    ForwardsAndSwaps = 'C'
+    OutrightForwardsAndFXSwaps = 'D'
+    OutrightForwards = 'E'
+    FXSwaps = 'H'
+    CurrencySwaps = 'I'
+    FRAAndIRSwaps = 'L'
+    ForwardRateAgreements = 'M'
+    InterestRateSwaps = 'N'
+    Futures = 'Q'
+    Options = 'R'
+    OptionsSold = 'S'
+    OptionsBought = 'T'
+    CreditDefaultSwaps = 'U'
+    SingleNameCDS = 'V'
+    MultiNameCDS = 'W'
+    IndexProducts = 'X'
+    OtherInstruments = 'Z'
+
+
+class OtcDerivativeRisk(Enum):
+    """Market risk category of the derivative."""
+    All = 'A'
+    ForeignExchange = 'B'
+    ForeignExchangeIncludingGold = 'C'
+    InterestRate = 'D'
+    Equity = 'E'
+    SingleEquity = 'F'
+    EquityIndex = 'G'
+    Commodities = 'J'
+    PreciousMetals = 'K'
+    Gold = 'L'
+    OtherPreciousMetals = 'M'
+    NonPreciousMetals = 'N'
+    AgriculturalCommodities = 'O'
+    EnergyProducts = 'P'
+    OtherCommodities = 'Q'
+    CreditDerivatives = 'T'
+    OtherDerivatives = 'U'
+    Unallocated = 'Z'
+
+
+class OtcCounterpartySector(Enum):
+    """Counterparty sector classification."""
+    All = 'A'
+    ReportingDealers = 'B'
+    OtherFinancialInstitutions = 'C'
+    NonReportingBanks = 'D'
+    InstitutionalInvestors = 'E'
+    HedgeFundsAndPTFs = 'F'
+    OfficialSectorFinancial = 'G'
+    Undistributed = 'H'
+    CentralCounterparties = 'K'
+    BanksAndSecuritiesFirms = 'L'
+    InsuranceAndFinancialGuaranty = 'M'
+    SPVs = 'N'
+    HedgeFunds = 'O'
+    OtherResidualFinancial = 'P'
+    NonFinancialCustomers = 'U'
+    PrimeBrokered = 'V'
+    RetailDriven = 'W'
+    RelatedPartyTrades = 'X'
+    OwnBranchesAndSubsidiaries = 'Y'
+    NonReporters = 'Z'
+
+
+class OtcUnderlyingSector(Enum):
+    """Sector of the underlying asset (mainly for CDS)."""
+    All = 'A'
+    Sovereigns = 'B'
+    NonSovereigns = 'C'
+    FinancialFirms = 'F'
+    NonFinancialFirms = 'G'
+    PortfolioOrStructured = 'J'
+    SecuritisedProducts = 'K'
+    ABSAndMBS = 'L'
+    Other = 'M'
+    MultipleSectors = 'N'
+
+
+class OtcMaturity(Enum):
+    """Maturity breakdown for derivatives."""
+    All = 'A'
+    ShortTerm = 'C'
+    OneToFiveYears = 'D'
+    OverFiveYears = 'F'
+    SevenDaysOrLess = 'G'
+    SevenDaysToOneMonth = 'H'
+    OneToThreeMonths = 'J'
+    LongTerm = 'K'
+    ThreeMonthsToOneYear = 'L'
+    OneToTwoYears = 'M'
+    OverTwoYears = 'N'
+    UpToOneYear = 'U'
+    OverOneYear = 'W'
+    Unallocated = 'X'
+
+
+class OtcRating(Enum):
+    """Rating classification."""
+    All = 'A'
+    InvestmentGrade = 'B'
+    UpperInvestmentGrade = 'D'
+    LowerInvestmentGrade = 'F'
+    BelowInvestmentGrade = 'H'
+    NonRated = 'Z'
+
+
+class OtcBasis(Enum):
+    """Basis for counting (adjustment for double-counting)."""
+    GrossGross = 'A'
+    NetGross = 'B'
+    NetNet = 'C'
 
