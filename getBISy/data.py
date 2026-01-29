@@ -301,6 +301,7 @@ def get_otc_derivatives_data(
     currency_leg2: str = 'TO1',
     maturity: OtcMaturity = OtcMaturity.All,
     rating: OtcRating = OtcRating.All,
+    exercise_method: str = '3',
     basis: OtcBasis = OtcBasis.NetNet
 ) -> str:
     """
@@ -324,6 +325,7 @@ def get_otc_derivatives_data(
         currency_leg2 (str, optional): Currency of second leg. Defaults to 'TO1' (all).
         maturity (OtcMaturity, optional): Maturity breakdown. Defaults to All.
         rating (OtcRating, optional): Rating classification. Defaults to All.
+        exercise_method (str, optional): Execution method ('3' for all methods). Defaults to '3'.
         basis (OtcBasis, optional): Adjustment for double-counting
             (gross-gross, net-gross, net-net). Defaults to NetNet.
 
@@ -339,7 +341,7 @@ def get_otc_derivatives_data(
         f'WS_OTC_DERIV2/~/{freq}.{derivative_type.value}.{instrument.value}.'
         f'{risk_category.value}.{reporting_country}.{counterparty_sector.value}.'
         f'{counterparty_country}.{underlying_sector.value}.{currency_leg1}.'
-        f'{currency_leg2}.{maturity.value}.{rating.value}.{basis.value}'
+        f'{currency_leg2}.{maturity.value}.{rating.value}.{exercise_method}.{basis.value}'
     )
     fetcher = GenericFetcher()
     return fetcher.fetch(url)
